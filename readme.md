@@ -1,126 +1,166 @@
-# Python Low Level Design Practice
+# Python Low-Level Design Practice
 
-This folder contains Python implementations of various Low Level Design problems commonly asked in software engineering interviews.
+This repository contains implementations of various low-level design problems to practice system design concepts using Python. Each problem is implemented with **clean, modular architecture** following SOLID principles.
 
-## 📁 Problems Implemented
+## Problems Implemented
 
-### 1. [Splitwise](./splitwise/)
-**Difficulty**: Medium  
-**Time Required**: 45-60 minutes  
-**Key Concepts**: Strategy Pattern, Balance Management, Split Calculations
+### 1. Splitwise - Expense Sharing Application 
+**Location**: `splitwise/` (Modular Architecture)
 
-A expense-sharing application like Splitwise that allows users to split bills among friends and track who owes whom.
+A comprehensive expense-sharing system that allows users to split bills and track balances between friends.
 
-**Features Covered**:
-- Multiple split types (Equal, Exact, Percentage)
-- User balance management
-- Debt settlement
-- Balance tracking and display
-
-**Interview Focus**: Object-oriented design, design patterns, financial calculations
-
----
-
-### 2. [Log Feeding Service](./log_feeding_service/)
-**Difficulty**: Medium-Hard  
-**Time Required**: 60 minutes  
-**Key Concepts**: Distributed Systems, REST APIs, Database Design, Scaling, Replication
-
-A distributed log collection and management system similar to Fluentd, Logstash, or CloudWatch Logs that handles log ingestion, storage, filtering, and querying.
-
-**Features Covered**:
-- Multi-service log ingestion with different log levels
-- Unique ID generation (Snowflake-like algorithm)
-- Advanced filtering system (level, service, time-range, correlation)
-- RESTful API design following best practices
-- Database design with indexing strategies
-- Replication strategies for high availability
-- Horizontal scaling approach
-- Comprehensive metrics and monitoring
-
-**Interview Focus**: System design, scalability, REST APIs, database choices, distributed systems concepts
-
----
-
-## 🎯 How to Use This Repository
-
-Each problem is contained in its own folder with:
-- **Main implementation file** - Single file containing all code with clear class separation
-- **README.md** - Detailed problem description, approach, and interview guidance  
-- **Interview cheat sheet** - Quick reference for interview presentation
-
-## 📚 Interview Preparation Tips
-
-### General Approach for Any LLD Problem:
-
-1. **Understand Requirements** (5-8 minutes)
-   - Ask clarifying questions
-   - Identify core entities and relationships
-   - Discuss scale and constraints
-
-2. **High-Level Design** (8-10 minutes)
-   - Identify main classes and their responsibilities
-   - Draw class relationships
-   - Choose appropriate design patterns
-
-3. **Detailed Implementation** (25-35 minutes)
-   - Start with core classes
-   - Add methods and attributes
-   - Implement business logic
-   - Handle edge cases and validation
-
-4. **Demo and Testing** (5-10 minutes)
-   - Walk through example scenarios
-   - Show key functionality working
-   - Discuss test cases
-
-5. **Extensions and Scale** (5-10 minutes)
-   - Database design
-   - API design
-   - Scaling considerations
-   - Additional features
-
-### Code Quality Checklist:
-- ✅ Clear class responsibilities (Single Responsibility Principle)
-- ✅ Proper abstraction and inheritance
-- ✅ Input validation and error handling
-- ✅ Meaningful method and variable names
-- ✅ Comments explaining complex logic
-- ✅ Extensible design for future requirements
-
-## 🚀 Running the Code
-
-Each problem can be run independently:
-
-```bash
-# Navigate to specific problem folder
-cd splitwise/
-
-# Run the implementation
-python3 splitwise_lld.py
+#### 🏗️ Modular Architecture:
+```
+splitwise/
+├── src/
+│   ├── models/          # User, Group, Expense, SplitDetail models
+│   ├── services/        # ExpenseManager, BalanceManager, GroupManager  
+│   ├── validators/      # SplitValidator for validation logic
+│   └── enums/          # SplitType, ExpenseCategory enums
+├── demo/               # Comprehensive demo scenarios
+└── main.py            # Main entry point with backward compatibility
 ```
 
-## 📋 Upcoming Problems
+#### Key Features:
+- **User Management**: Create and manage user accounts with profiles
+- **Group Management**: Create groups and manage group memberships  
+- **Flexible Expense Splitting**: Support for equal, exact, percentage, and mixed splits
+- **Balance Tracking**: Track balances between individual users and within groups
+- **Settlement System**: Process payments and update balances with group context
+- **Comprehensive Reporting**: Generate balance summaries and group statistics
 
-More LLD problems will be added to this repository:
+#### Enhanced Functionality:
+- **User-Centric Design**: All operations center around user profiles and relationships
+- **Group-Aware Operations**: Expenses and settlements are tracked within group contexts
+- **Advanced Split Types**: 
+  - Equal: Split amount equally among participants
+  - Exact: Specify exact amounts for each participant  
+  - Percentage: Split based on percentages (auto-calculates remaining)
+  - Mixed: Combine different split types in one expense
+- **Smart Validation**: Comprehensive validation for splits, users, and amounts
+- **Category Organization**: Organize expenses by categories (Food, Travel, Utilities, etc.)
 
-- **Parking Lot System**
-- **Library Management System** 
-- **Chat Application**
-- **Ride Sharing Service**
-- **Online Banking System**
-- **Food Delivery System**
-- **Movie Ticket Booking**
-- **Social Media Feed**
-- **Distributed Cache System**
-- **URL Shortener Service**
+#### Demo Usage:
+```bash
+cd splitwise
+python3 main.py
+```
 
-## 🔗 Additional Resources
+### 2. Log Feeding Service - Distributed Log Collection System
+**Location**: `log_feeding_service/` (Modular Architecture)
 
-- [Original LLD Problems Repository](../problems/) - Problem statements
-- [Design Patterns in Python](../design-patterns/python/) - Common patterns used in LLD
-- [System Design Primer](https://github.com/donnemartin/system-design-primer) - For HLD concepts
+A high-throughput log collection and management system designed for distributed environments.
 
----
+#### 🏗️ Modular Architecture:
+```
+log_feeding_service/
+├── src/
+│   ├── models/          # LogEntry, LogLevel enums
+│   ├── storage/         # DatabaseInterface, InMemoryDatabase, Replication
+│   ├── services/        # LogFeedingService, ScalingStrategies
+│   ├── filters/         # LogFilter, LevelFilter, ServiceFilter, etc.
+│   └── api/            # REST API handlers and routes
+├── demo/               # Comprehensive demo scenarios
+└── main.py            # Main entry point with backward compatibility
+```
 
-*Each implementation is designed to be completed within a typical 1-hour interview timeframe while covering all essential aspects of the problem.*
+#### Key Features:
+- **High-Throughput Ingestion**: Handle millions of logs per second
+- **Multiple Log Levels**: Support for DEBUG, INFO, WARN, ERROR, FATAL
+- **Advanced Filtering**: Filter by service, level, timestamp, keywords
+- **Time-Series Storage**: Optimized for time-based queries and retention
+- **Replication Strategy**: Master-slave replication for high availability
+- **REST API**: RESTful endpoints for log ingestion and querying
+- **Scaling Strategies**: Service-based and time-based sharding
+
+#### Architecture Components:
+- **Storage Layer**: Abstract database interfaces with in-memory implementation
+- **Service Layer**: Core business logic for log management and scaling
+- **Filter Layer**: Composable filtering system with multiple filter types
+- **API Layer**: Framework-agnostic REST API handlers
+- **Replication System**: Master-slave replication with failover support
+- **Scaling Layer**: Horizontal scaling with sharding strategies
+
+#### REST API Endpoints:
+- `POST /logs` - Ingest single log entry
+- `POST /logs/batch` - Batch ingest multiple logs
+- `GET /logs` - Query logs with filters (service, level, time range)
+- `GET /logs/stats` - Get log statistics and metrics
+
+#### Demo Usage:
+```bash
+cd log_feeding_service  
+python3 main.py
+```
+
+## 🎯 Architecture Highlights
+
+### Design Principles Applied:
+- **SOLID Principles**: Each class has single responsibility, open for extension, proper abstraction
+- **Clean Architecture**: Clear separation between models, services, storage, and presentation layers
+- **Dependency Injection**: Services depend on abstractions, not concrete implementations
+- **Factory Patterns**: Easy service creation with different configurations
+- **Strategy Patterns**: Pluggable algorithms for replication, scaling, and filtering
+
+### Benefits of Modular Design:
+- **Maintainability**: Easy to understand, modify, and extend individual components
+- **Testability**: Each module can be tested independently with proper mocking
+- **Scalability**: Components can be scaled and deployed independently  
+- **Reusability**: Modules can be reused across different parts of the system
+- **Backward Compatibility**: Main.py files provide compatibility with original single-file designs
+
+## 🚀 Getting Started
+
+1. Clone this repository
+2. Navigate to the specific problem directory (`splitwise/` or `log_feeding_service/`)
+3. Run `python3 main.py` to see the comprehensive demo
+4. Explore the `src/` directory to understand the modular architecture
+5. Check out individual modules and their responsibilities
+
+## 🧪 Testing the Modular Design
+
+Both implementations include comprehensive demo scenarios that showcase:
+
+### Splitwise Demo:
+- User creation and group management
+- All split types (equal, exact, percentage, mixed)
+- Balance tracking and settlement processing
+- Group-specific operations and reporting
+
+### Log Feeding Service Demo:
+- Basic log ingestion and querying
+- Batch processing capabilities  
+- Replication strategies demonstration
+- Advanced filtering scenarios
+- REST API usage examples
+- Scaling strategies (sharding, load balancing)
+
+## 🔄 Migration Notes
+
+The modular implementations maintain **full backward compatibility** through the `main.py` files, which expose the same interfaces as the original single-file implementations while leveraging the new clean architecture underneath.
+
+## � Future Enhancements
+
+### Enhanced Architecture Features:
+- **Event-Driven Architecture**: Implement pub/sub patterns for async operations
+- **Microservices Decomposition**: Break into independently deployable services
+- **Database Integration**: Add support for real databases (PostgreSQL, MongoDB)
+- **Caching Layer**: Add Redis/Memcached for performance optimization
+- **Message Queues**: Add Kafka/RabbitMQ for reliable async processing
+
+### Business Logic Enhancements:
+- **Authentication & Authorization**: JWT-based security with role-based access
+- **Multi-tenancy**: Support for multiple organizations with data isolation
+- **Real-time Features**: WebSocket support for live updates
+- **Advanced Analytics**: Machine learning for anomaly detection and insights
+- **Mobile APIs**: REST/GraphQL APIs optimized for mobile applications
+
+## 🤝 Contributing
+
+Feel free to contribute:
+- Additional LLD problems with clean modular architecture
+- Enhancements to existing implementations
+- Performance optimizations and benchmarks
+- Integration tests and documentation improvements
+
+Please ensure all contributions follow the established modular design patterns and include comprehensive documentation.
